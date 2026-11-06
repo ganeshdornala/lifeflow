@@ -1,69 +1,187 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+type CommitmentStatus = "Ready" | "Blocked" | "Completed";
 
-export default function Home() {
+type Commitment = {
+  id: string;
+  title: string;
+  category: string;
+  dueDate: string;
+  status: CommitmentStatus;
+  nextAction: string;
+};
+
+const sampleCommitments: Commitment[] = [
+  {
+    id: "1",
+    title: "Renew vehicle insurance",
+    category: "Insurance",
+    dueDate: "Dec 15, 2026",
+    status: "Ready",
+    nextAction: "Review the existing policy",
+  },
+  {
+    id: "2",
+    title: "Renew rental agreement",
+    category: "Home",
+    dueDate: "Nov 20, 2026",
+    status: "Blocked",
+    nextAction: "Waiting for the updated rental terms",
+  },
+  {
+    id: "3",
+    title: "Complete certification renewal",
+    category: "Career",
+    dueDate: "Nov 05, 2026",
+    status: "Completed",
+    nextAction: "Completion recorded",
+  },
+];
+
+function StatusBadge({status}: {status: CommitmentStatus}) {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>
-            To get started, edit the{" "}
-            <code className={styles.code}>page.tsx</code> file.
-          </h1>
+    <span className={`status-badge status-${status.toLowerCase()}`}>
+      {status}
+    </span>
+  );
+}
+
+export default function HomePage() {
+  const activeCommitments = sampleCommitments.filter(
+    (item) => item.status !== "Completed",
+  );
+  const blockedCount = sampleCommitments.filter(
+    (item) => item.status === "Blocked",
+  ).length;
+  const completedCount = sampleCommitments.filter(
+    (item) => item.status === "Completed",
+  ).length;
+  return(
+    <main className="app-shell">
+      <aside className="sidebar">
+        <a className="brand" href="/">
+          <span className="brand-mark">L</span>
+          <span>LifeFlow</span>
+        </a>
+        <p className="sidebar-label">WORKSPACE</p>
+        <nav className="navigation" aria-label="Main navigation">
+          <a className="nav-link active" href="#overview">
+            <span aria-hidden="true">◫</span>
+            Overview
+          </a>
+          <a className="nav-link" href="#commitments">
+            <span aria-hidden="true">◷</span>
+            Commitments
+          </a>
+          <a className="nav-link" href="#next-action">
+            <span aria-hidden="true">↗</span>
+            Next actions
+          </a>
+        </nav>
+        <div className="privacy-note">
+          <span aria-hidden="true">⌑</span>
+          <div>
+            <strong>Privacy first</strong>
+            <p>Private documents will be encrypted on yor device.</p>
+          </div>
+        </div>
+      </aside>
+      <section className="main-content" id="overview">
+        <header className="topbar">
+          <div>
+            <p className="eyebrow">YOUR PERSONAL WORKSPACE</p>
+            <h1>Get important things done.</h1>
+          </div>
+          <span className="avatar" aria-label="Demo profile">
+            D
+          </span>
+        </header>
+        <section className="intro">
+          <p className="eyebrow">LESS CHASING. MORE COMPLETING.</p>
+          <h2>Know what matters. Know what comes next.</h2>
           <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
+            LifeFlow helps you manage important responsibilities,
+            understand what is blocking progress, and keep the
+            information you need to finish the job. 
           </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+        </section>
+        <section className="stats-grid" aria-label="Commitment summary">
+          <article className="stat-card">
+            <p>Active commitments</p>
+            <strong>{activeCommitments.length}</strong>
+            <span>Still need attention</span>
+          </article>
+          <article className="stat-card">
+            <p>Blocked commitments</p>
+            <strong>{blockedCount}</strong>
+            <span>Need a prerequisite</span>
+          </article>
+          <article className="stat-card">
+            <p>Completed</p>
+            <strong>{completedCount}</strong>
+            <span>Recorded in this demo</span>
+          </article>
+        </section>
+        <section className="next-action" id="next-action">
+          <div>
+            <p className="eyebrow">A GOOD PLACE TO START</p>
+            <h2>Review your vehicle insurance policy</h2>
+            <p>
+              This is a sample recommendation. The finished product
+              will prioritize actions using deadlines, prerequisites,
+              and their impact on other commitments.
+            </p>
+          </div>
+          <span className="action-symbol" aria-hidden="true">
+            →
+          </span>
+        </section>
+        <section className="commitments-section" id="commitments">
+          <div className="section-heading">
+            <div>
+              <p className="eyebrow">YOUR RESPONSIBILITIES</p>
+              <h2>Commitments</h2>
+            </div>
+            <span className="sample-label">Sample data</span>
+          </div>
+          <div className="commitment-list">
+            {
+              sampleCommitments.map((commitment) => (
+                <article
+                  className="commitment-card"
+                  key={commitment.id}
+                >
+                  <div className="commitment-main">
+                    <div className="commitment-icon" aria-hidden="true">
+                      {
+                        commitment.category === "Insurance"
+                          ? "▤"
+                          : commitment.category === "Home"
+                            ? "⌂"
+                            : "◇"
+                      }
+                    </div>
+                    <div className="commitment-details">
+                      <h3>{commitment.title}</h3>
+                      <p>{commitment.category}</p>
+                      <p className="next-step">
+                        {commitment.nextAction}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="commitment-meta">
+                    <span className="due-date">
+                      {commitment.dueDate}
+                    </span>
+                    <StatusBadge status={commitment.status}/>
+                  </div>
+                </article>
+              ))
+            }
+          </div>
+        </section>
+        <footer className="page-footer">
+          LifeFlow · Built around real-world responsibilities
+        </footer>
+      </section>
+    </main>
   );
 }

@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# LifeFlow
 
-First, run the development server:
+**A personal responsibility and commitment execution system.**
+
+LifeFlow helps people manage important real-world responsibilities from initial planning through actual outcome verification.
+
+Unlike a conventional to-do list, LifeFlow distinguishes between completing an action and achieving the intended outcome.
+
+For example, paying an insurance premium does not necessarily mean the renewed policy has been issued and is active.
+
+## Core capabilities
+
+- **Commitment management:** Represent important responsibilities with deadlines, priorities and lifecycle states.
+- **Dependency management:** Identify prerequisites and prevent blocked work from being treated as ready.
+- **Workflow execution:** Break commitments into ordered, dependency-aware steps.
+- **Impact analysis:** Understand which downstream commitments depend on unfinished work.
+- **Prioritization:** Rank work using urgency, priority and downstream impact.
+- **Outcome verification:** Require an explicit achieved outcome before marking a commitment complete.
+
+## Technology stack
+
+- Next.js (App Router)
+- React
+- TypeScript
+- Vitest
+
+## Project status
+
+The current implementation includes:
+
+- Initial LifeFlow interface.
+- Pure TypeScript domain models and business logic.
+- Commitment dependency engine.
+- Workflow execution engine.
+- Prioritization engine.
+- Outcome verification engine.
+- Automated domain tests.
+
+**Current test coverage:** 106 passing tests across 5 test files.
+
+Backend persistence, authentication, document evidence storage and production deployment are planned future milestones. They are not represented as completed features.
+
+## Getting started
+
+### Prerequisites
+
+- Node.js
+- npm
+
+### Installation
+
+```bash
+git clone <your-repository-url>
+cd lifeflow
+npm install
+```
+
+### Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Run tests
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm test
+```
 
-## Learn More
+### Type-check
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npx tsc --noEmit
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Engineering principles
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Model real-world constraints explicitly.
+- Keep business logic independent of UI and infrastructure.
+- Prefer deterministic, explainable decision-making.
+- Validate dependencies and state transitions.
+- Avoid unnecessary architectural complexity.
+- Prioritize correctness, reliability and maintainability.
 
-## Deploy on Vercel
+## Roadmap
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Complete and harden the domain layer.
+2. Introduce application services and persistence.
+3. Implement authentication and authorization.
+4. Build reliable workflow and commitment operations.
+5. Add secure document evidence management.
+6. Introduce reminders and risk detection.
+7. Test, deploy and improve using real-world feedback.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+LifeFlow is being developed incrementally, with correctness and practical usefulness taking priority over feature count.
